@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Guess the Number</title>
+    <style>
+        body {
+            font-family: Arial;
+            background-color: #f5f5f5;
+            text-align: center;
+            padding-top: 50px;
+        }
+        input {
+            padding: 8px;
+            margin: 10px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        p {
+            font-size: 20px;
+            color: #333;
+        }
+        .shake {
+            animation: shake 0.3s;
+        }
+        @keyframes shake {
+            0% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            50% { transform: translateX(5px); }
+            75% { transform: translateX(-5px); }
+            100% { transform: translateX(0); }
+        }
+    </style>
+</head>
+<body>
+
+<!-- 🎬 Start Screen -->
+<div id="startScreen">
+    <h1>🎯 Guess the Number Game</h1>
+    <p>Select Difficulty:</p>
+    <button onclick="setLevel(10)">Easy (1–10)</button>
+    <button onclick="setLevel(50)">Medium (1–50)</button>
+    <button onclick="setLevel(100)">Hard (1–100)</button>
+</div>
+
+<!-- 🎮 Game Screen -->
+<div id="gameScreen" style="display:none;">
+    <h1>Guess the Number</h1>
+    <input id="one" placeholder="Enter a number">
+    <button onclick="checknum()">Check</button>
+    <p id="two">You are right/wrong</p>
+    <p id="three">Score: 10</p>
+    <button onclick="empty()">RESET</button>
+</div>
+
+<script>
+    let one = document.getElementById("one");
+    let two = document.getElementById("two");
+    let three = document.getElementById("three");
+
+    let totalscore = 10;
+    let maxNumber = 10;
+    let sysnumber = 0;
+
+    function setLevel(limit) {
+        maxNumber = limit;
+        sysnumber = Math.floor(Math.random() * maxNumber) + 1;
+        document.getElementById("startScreen").style.display = "none";
+        document.getElementById("gameScreen").style.display = "block";
+        alert("Game started! Guess a number between 1 and " + maxNumber);
+    }
+
+    function checknum() {
+        let enternumber = Number(one.value);
+
+        if (enternumber === sysnumber) {
+            two.textContent = "You are right!";
+            alert("🎉 You won!");
+            one.value = "";
+            sysnumber = Math.floor(Math.random() * maxNumber) + 1;
+        } else {
+            totalscore -= 1;
+            three.textContent = "Score: " + totalscore;
+            two.textContent = "You are wrong!";
+            one.classList.add("shake");
+
+            setTimeout(() => {
+                one.classList.remove("shake");
+            }, 300);
+
+            alert("❌ Try again...");
+            one.value = "";
+
+            if (totalscore === 0) {
+                alert("Your score is 0. Resetting to 10.");
+                totalscore = 10;
+                three.textContent = "Score: " + totalscore;
+                sysnumber = Math.floor(Math.random() * maxNumber) + 1;
+            }
+        }
+    }
+
+    function empty() {
+        one.value = "";
+        totalscore = 10;
+        three.textContent = "Score: " + totalscore;
+        sysnumber = Math.floor(Math.random() * maxNumber) + 1;
+    }
+</script>
+
+</body>
+</html>
