@@ -1,1 +1,5 @@
-match the system number 
+Guess the Number is a simple interactive browser game where the player tries to guess a random number selected by the system. The game helps build logical thinking, user interaction with HTML and css , and beginner JavaScript skills.
+it has three level
+    1.easy level
+    2.intermediate level
+    3.hard level
